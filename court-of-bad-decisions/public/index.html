@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Court of Bad Decisions</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=IBM+Plex+Mono:wght@400;500&family=Source+Sans+3:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#211511;
+    --parchment:#efe6cd;
+    --parchment-dim:#e4d8b8;
+    --mahogany:#2c0f12;
+    --mahogany-2:#3c1418;
+    --oxblood:#8c2a2a;
+    --oxblood-dark:#5c1c1c;
+    --forest:#33513f;
+    --forest-dark:#213829;
+    --brass:#b8863a;
+    --brass-bright:#d9a856;
+    --line: rgba(184,134,58,0.35);
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:
+      radial-gradient(1200px 600px at 50% -10%, #4a1c20 0%, var(--mahogany) 55%, #200a0c 100%);
+    color: var(--parchment);
+    font-family:'Source Sans 3', sans-serif;
+    min-height:100vh;
+    padding: 40px 16px 80px;
+  }
+  .wrap{max-width:760px;margin:0 auto;}
+
+  /* header */
+  .letterhead{
+    text-align:center;
+    padding-bottom:22px;
+    margin-bottom:28px;
+    border-bottom: 1px solid var(--line);
+  }
+  .docket{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12px;
+    letter-spacing:0.08em;
+    color: var(--brass-bright);
+    margin-bottom:10px;
+  }
+  h1{
+    font-family:'Fraunces', serif;
+    font-optical-sizing:auto;
+    font-weight:600;
+    font-size: clamp(30px, 6vw, 46px);
+    line-height:1.05;
+    margin:0 0 8px;
+    color: var(--parchment);
+  }
+  .tagline{
+    font-size:15px;
+    color: var(--parchment-dim);
+    opacity:0.8;
+    max-width: 46ch;
+    margin: 0 auto;
+    line-height:1.5;
+  }
+
+  /* filing form */
+  .filing{
+    background: linear-gradient(180deg, var(--mahogany-2), #2a0e11);
+    border: 1px solid var(--line);
+    border-radius:3px;
+    padding: 26px 24px;
+    margin-bottom: 32px;
+  }
+  .filing label{
+    display:block;
+    font-family:'Fraunces', serif;
+    font-size:19px;
+    margin-bottom:12px;
+    color: var(--brass-bright);
+  }
+  textarea{
+    width:100%;
+    background: var(--parchment);
+    color: var(--ink);
+    border: none;
+    border-radius:2px;
+    padding:14px 16px;
+    font-family:'Source Sans 3', sans-serif;
+    font-size:16px;
+    line-height:1.5;
+    resize: vertical;
+    min-height:76px;
+  }
+  textarea:focus{outline:2px solid var(--brass-bright); outline-offset:1px;}
+  .examples{
+    margin-top:10px;
+    font-size:13px;
+    color: var(--parchment-dim);
+    opacity:0.65;
+  }
+  .filing-footer{
+    display:flex;
+    justify-content:flex-end;
+    margin-top:18px;
+  }
+  button.file-btn{
+    background: var(--brass);
+    color: #241000;
+    border:none;
+    font-family:'Fraunces', serif;
+    font-weight:600;
+    font-size:16px;
+    padding: 12px 26px;
+    border-radius:2px;
+    cursor:pointer;
+    transition: background 0.15s ease, transform 0.1s ease;
+  }
+  button.file-btn:hover:not(:disabled){ background: var(--brass-bright); }
+  button.file-btn:active:not(:disabled){ transform: translateY(1px); }
+  button.file-btn:disabled{ opacity:0.55; cursor:default; }
+
+  .again-btn{
+    background:transparent;
+    color: var(--brass-bright);
+    border:1px solid var(--line);
+    font-family:'Source Sans 3', sans-serif;
+    font-size:14px;
+    padding:9px 16px;
+    border-radius:2px;
+    cursor:pointer;
+    margin-top: 28px;
+  }
+  .again-btn:hover{ border-color: var(--brass-bright); }
+
+  /* status */
+  .status{
+    text-align:center;
+    font-family:'IBM Plex Mono', monospace;
+    font-size:13px;
+    color: var(--brass-bright);
+    letter-spacing:0.04em;
+    margin: 18px 0 6px;
+    min-height:18px;
+  }
+  .status.error{ color:#e08a7d; }
+
+  /* proceedings */
+  .proceedings{ display:flex; flex-direction:column; gap:16px; }
+
+  .charge{
+    font-family:'Fraunces', serif;
+    font-style:italic;
+    font-size:17px;
+    text-align:center;
+    color: var(--parchment-dim);
+    padding: 4px 8px 10px;
+    border-bottom: 1px solid var(--line);
+    opacity:0;
+  }
+
+  .bench{
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+    gap:14px;
+  }
+  @media (max-width:560px){ .bench{ grid-template-columns:1fr; } }
+
+  .card{
+    border-radius:3px;
+    padding:18px 18px 16px;
+    opacity:0;
+    transform: translateY(6px);
+  }
+  .card.prosecution{
+    background: linear-gradient(180deg, var(--oxblood-dark), #401414);
+    border:1px solid rgba(140,42,42,0.5);
+  }
+  .card.defence{
+    background: linear-gradient(180deg, var(--forest-dark), #142219);
+    border:1px solid rgba(51,81,63,0.6);
+  }
+  .role{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:11px;
+    letter-spacing:0.1em;
+    text-transform: uppercase;
+    margin-bottom:10px;
+    opacity:0.75;
+  }
+  .prosecution .role{ color:#e6a5a0; }
+  .defence .role{ color:#a9c9b3; }
+  .card p{
+    margin:0;
+    font-size:15.5px;
+    line-height:1.55;
+    color: var(--parchment);
+  }
+
+  .verdict-wrap{
+    opacity:0;
+    margin-top:6px;
+  }
+  .verdict{
+    background: var(--parchment);
+    color: var(--ink);
+    border-radius:2px;
+    padding: 26px 26px 22px;
+    position:relative;
+    box-shadow: 0 18px 40px rgba(0,0,0,0.35);
+  }
+  .verdict::before{
+    content:"";
+    position:absolute;
+    top:14px; right:16px;
+    width:64px; height:64px;
+    border:2px solid var(--oxblood);
+    border-radius:50%;
+    transform: rotate(-14deg);
+    opacity:0.55;
+  }
+  .verdict::after{
+    content:"RULED";
+    position:absolute;
+    top:38px; right:23px;
+    font-family:'IBM Plex Mono', monospace;
+    font-size:11px;
+    letter-spacing:0.12em;
+    color: var(--oxblood);
+    transform: rotate(-14deg);
+    opacity:0.7;
+  }
+  .verdict-label{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:11px;
+    letter-spacing:0.1em;
+    text-transform:uppercase;
+    color: var(--oxblood-dark);
+    margin-bottom:8px;
+  }
+  .verdict h2{
+    font-family:'Fraunces', serif;
+    font-weight:700;
+    font-size: clamp(20px, 4vw, 26px);
+    line-height:1.2;
+    margin: 0 0 12px;
+    max-width: 80%;
+  }
+  .verdict .commentary{
+    font-size:15px;
+    line-height:1.6;
+    color:#3a2c22;
+    margin: 0 0 18px;
+  }
+  .sentence{
+    border-top: 1px dashed rgba(44,15,18,0.35);
+    padding-top:14px;
+  }
+  .sentence-label{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:11px;
+    letter-spacing:0.1em;
+    text-transform:uppercase;
+    color: var(--oxblood-dark);
+    margin-bottom:6px;
+  }
+  .sentence p{
+    margin:0;
+    font-family:'Fraunces', serif;
+    font-size:16.5px;
+    font-style:italic;
+    line-height:1.5;
+    color: var(--ink);
+  }
+
+  .footer-note{
+    text-align:center;
+    font-size:12px;
+    color: var(--parchment-dim);
+    opacity:0.45;
+    margin-top:40px;
+  }
+
+  @keyframes riseIn{
+    from{ opacity:0; transform: translateY(10px); }
+    to{ opacity:1; transform: translateY(0); }
+  }
+  .show{ animation: riseIn 0.5s ease forwards; }
+
+  @media (prefers-reduced-motion: reduce){
+    .show{ animation:none; opacity:1; transform:none; }
+  }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="letterhead">
+      <div class="docket" id="docket">CASE NO. PENDING</div>
+      <h1>Court of Bad Decisions</h1>
+      <p class="tagline">Every questionable choice deserves due process. State your case below and let the court decide.</p>
+    </div>
+
+    <div class="filing" id="filingCard">
+      <label for="decisionInput">What decision is on trial?</label>
+      <textarea id="decisionInput" placeholder="e.g. Should I text my crush at 1am?"></textarea>
+      <div class="examples">Try: "Should I skip college today?" · "Should I eat cereal for dinner again?"</div>
+      <div class="filing-footer">
+        <button class="file-btn" id="fileBtn">File the Case</button>
+      </div>
+    </div>
+
+    <div class="status" id="statusLine"></div>
+
+    <div class="proceedings" id="proceedings"></div>
+
+    <div style="text-align:center;">
+      <button class="again-btn" id="againBtn" style="display:none;">File Another Case</button>
+    </div>
+
+    <div class="footer-note">All rulings are final, binding, and completely made up.</div>
+  </div>
+
+<script>
+(function(){
+  const input = document.getElementById('decisionInput');
+  const fileBtn = document.getElementById('fileBtn');
+  const againBtn = document.getElementById('againBtn');
+  const statusLine = document.getElementById('statusLine');
+  const proceedings = document.getElementById('proceedings');
+  const filingCard = document.getElementById('filingCard');
+  const docket = document.getElementById('docket');
+
+  function randomDocket(){
+    const n = Math.floor(1000 + Math.random()*8999);
+    const y = new Date().getFullYear();
+    return `CASE NO. ${y}-CV-${n}`;
+  }
+
+  function setStatus(text, isError){
+    statusLine.textContent = text || '';
+    statusLine.classList.toggle('error', !!isError);
+  }
+
+  function escapeHtml(str){
+    const d = document.createElement('div');
+    d.textContent = str;
+    return d.innerHTML;
+  }
+
+  async function wait(ms){ return new Promise(r => setTimeout(r, ms)); }
+
+  async function askCourt(decisionText){
+    const response = await fetch("/api/verdict", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ decision: decisionText })
+    });
+
+    const data = await response.json().catch(() => ({}));
+
+    if(!response.ok){
+      throw new Error(data.error || "The court reporter dropped the transcript (request failed).");
+    }
+
+    return data;
+  }
+
+  function renderProceedings(caseText, result){
+    proceedings.innerHTML = `
+      <div class="charge" id="chargeLine">The matter before the court: <strong>&ldquo;${escapeHtml(caseText)}&rdquo;</strong></div>
+      <div class="bench">
+        <div class="card prosecution" id="prosCard">
+          <div class="role">Prosecution</div>
+          <p>${escapeHtml(result.prosecutionArgument)}</p>
+        </div>
+        <div class="card defence" id="defCard">
+          <div class="role">Defence</div>
+          <p>${escapeHtml(result.defenceArgument)}</p>
+        </div>
+      </div>
+      <div class="verdict-wrap" id="verdictWrap">
+        <div class="verdict">
+          <div class="verdict-label">The Court Rules</div>
+          <h2>${escapeHtml(result.verdict)}</h2>
+          <p class="commentary">${escapeHtml(result.judgeCommentary)}</p>
+          <div class="sentence">
+            <div class="sentence-label">Sentence</div>
+            <p>${escapeHtml(result.sentence)}</p>
+          </div>
+        </div>
+      </div>
+    `;
+  }
+
+  async function revealSequence(){
+    const charge = document.getElementById('chargeLine');
+    const pros = document.getElementById('prosCard');
+    const def = document.getElementById('defCard');
+    const verdict = document.getElementById('verdictWrap');
+
+    charge.classList.add('show');
+    await wait(450);
+    setStatus('The prosecution rises...');
+    pros.classList.add('show');
+    await wait(700);
+    setStatus('The defence responds...');
+    def.classList.add('show');
+    await wait(700);
+    setStatus('The judge is ready to rule...');
+    await wait(600);
+    verdict.classList.add('show');
+    setStatus('');
+    verdict.scrollIntoView({ behavior:'smooth', block:'center' });
+  }
+
+  async function fileCase(){
+    const text = input.value.trim();
+    if(!text){
+      setStatus('The court requires an actual decision to rule on.', true);
+      input.focus();
+      return;
+    }
+
+    fileBtn.disabled = true;
+    proceedings.innerHTML = '';
+    againBtn.style.display = 'none';
+    docket.textContent = randomDocket();
+    setStatus('The court is now in session...');
+
+    try{
+      const result = await askCourt(text);
+      renderProceedings(text, result);
+      filingCard.style.display = 'none';
+      await revealSequence();
+      againBtn.style.display = 'inline-block';
+    }catch(err){
+      setStatus(err.message || 'The court has encountered an unexpected recess.', true);
+    }finally{
+      fileBtn.disabled = false;
+    }
+  }
+
+  fileBtn.addEventListener('click', fileCase);
+  input.addEventListener('keydown', (e) => {
+    if(e.key === 'Enter' && (e.metaKey || e.ctrlKey)){ fileCase(); }
+  });
+  againBtn.addEventListener('click', () => {
+    proceedings.innerHTML = '';
+    filingCard.style.display = 'block';
+    input.value = '';
+    setStatus('');
+    docket.textContent = 'CASE NO. PENDING';
+    againBtn.style.display = 'none';
+    input.focus();
+  });
+
+  docket.textContent = randomDocket();
+})();
+</script>
+</body>
+</html>
