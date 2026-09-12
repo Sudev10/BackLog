@@ -97,47 +97,51 @@ The courtroom where the Judge, Prosecutor and Defence Lawyer present their argum
 
 ![Screenshot3- Final Verdict](https://github.com/Sudev10/BackLog/blob/main/Screenshot%20(4).png?raw=true)
 The final dramatic verdict showing whether the defendant is guilty and the ridiculous punishment imposed by the court.
+## Diagrams
 
-# Diagrams
-![Workflow](                    ┌────────────────────┐
-                    │    User Decision   │
-                    │ "Should I text her?"│
-                    └─────────┬──────────┘
-                              ↓
-                    ┌────────────────────┐
-                    │  Case Input Form   │
-                    │ + Foolishness Meter│
-                    └─────────┬──────────┘
-                              ↓
-                    ┌────────────────────┐
-                    │ Courtroom AI Engine│
-                    └─────────┬──────────┘
-                              ↓
-              ┌───────────────┼───────────────┐
-              ↓               ↓               ↓
-       ┌────────────┐  ┌────────────┐  ┌────────────┐
-       │   Judge    │  │ Prosecutor │  │  Defence   │
-       │    ⚖️      │  │     🔥     │  │     🛡️     │
-       └──────┬─────┘  └──────┬─────┘  └──────┬─────┘
-              └───────────────┼───────────────┘
-                              ↓
-                    ┌────────────────────┐
-                    │  Courtroom Trial   │
-                    │ Opening → Evidence │
-                    │ → Arguments        │
-                    └─────────┬──────────┘
-                              ↓
-                    ┌────────────────────┐
-                    │      Verdict       │
-                    │ Guilty / Not Guilty│
-                    └─────────┬──────────┘
-                              ↓
-                    ┌────────────────────┐
-                    │ Funny Punishment   │
-                    └────────────────────┘)
+### Workflow
+
+```text
+┌────────────────────┐
+│    User Decision   │
+│ "Should I text her?"│
+└─────────┬──────────┘
+          ↓
+┌────────────────────┐
+│   Case Input Form  │
+│ + Foolishness Meter│
+└─────────┬──────────┘
+          ↓
+┌────────────────────┐
+│  Courtroom AI      │
+│      Engine        │
+└─────────┬──────────┘
+          ↓
+    ┌─────┼─────┐
+    ↓     ↓     ↓
+┌────────┐ ┌──────────┐ ┌──────────┐
+│ Judge  ⚖│ │Prosecutor│ │ Defence 🛡│
+│        │ │    🔥     │ │          │
+└────┬───┘ └─────┬────┘ └────┬─────┘
+     └────────────┼───────────┘
+                  ↓
+        ┌────────────────────┐
+        │   Courtroom Trial  │
+        │ Opening → Evidence │
+        │ → Arguments        │
+        └─────────┬──────────┘
+                  ↓
+        ┌────────────────────┐
+        │      Verdict       │
+        │ Guilty / Not Guilty│
+        └─────────┬──────────┘
+                  ↓
+        ┌────────────────────┐
+        │  Funny Punishment  │
+        └────────────────────┘
 Workflow showing how a user's everyday decision is transformed into a courtroom trial and ultimately produces a humorous verdict.
 
-
+```
 ### Project Demo
 # Video
 [Add your demo video link here]
