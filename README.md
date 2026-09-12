@@ -144,7 +144,7 @@ Workflow showing how a user's everyday decision is transformed into a courtroom 
 ```
 ### Project Demo
 # Video
-[Add your demo video link here]
+[https://drive.google.com/file/d/1PiUPZrY-uZhxIYvjHwO8hN0A7Nh7_NBY/view?usp=sharing]
 The demo demonstrates the complete journey from submitting an everyday decision to watching the AI courtroom debate the case and receiving the final ridiculous verdict.
 
 
