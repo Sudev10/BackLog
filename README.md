@@ -92,7 +92,7 @@ For Software:
 ![Screenshot1](https://github.com/Sudev10/BackLog/blob/main/Screenshot%20(2).png?raw=true)
 *Add caption explaining what this shows*
 
-![Screenshot2](Add screenshot 2 here with proper name)
+![Screenshot2](https://github.com/Sudev10/BackLog/blob/main/Screenshot%20(3).png?raw=true)
 *Add caption explaining what this shows*
 
 ![Screenshot3](Add screenshot 3 here with proper name)
