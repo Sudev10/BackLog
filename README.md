@@ -89,14 +89,14 @@ npm install]
 For Software:
 
 # Screenshots (Add at least 3)
-![Screenshot1](https://github.com/Sudev10/BackLog/blob/main/Screenshot%20(2).png?raw=true)
-*Add caption explaining what this shows*
+![Screenshot1-Case Filing ](https://github.com/Sudev10/BackLog/blob/main/Screenshot%20(2).png?raw=true)
+The case filing screen where users submit their everyday decision and select its foolishness level.
 
-![Screenshot2](https://github.com/Sudev10/BackLog/blob/main/Screenshot%20(3).png?raw=true)
-*Add caption explaining what this shows*
+![Screenshot2-Courtroom Trial](https://github.com/Sudev10/BackLog/blob/main/Screenshot%20(3).png?raw=true)
+The courtroom where the Judge, Prosecutor and Defence Lawyer present their arguments.
 
-![Screenshot3](Add screenshot 3 here with proper name)
-*Add caption explaining what this shows*
+![Screenshot3- Final Verdict](https://github.com/Sudev10/BackLog/blob/main/Screenshot%20(4).png?raw=true)
+The final dramatic verdict showing whether the defendant is guilty and the ridiculous punishment imposed by the court.
 
 # Diagrams
 ![Workflow](                    ┌────────────────────┐
